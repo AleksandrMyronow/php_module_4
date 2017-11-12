@@ -1,0 +1,47 @@
+<div class="main-body">
+    <div class="wrap">
+        <div class="col-md-3">
+            <p><?php foreach($data['spam_left'] as $spam_left){ ?>
+            <h5><?=$spam_left['name']?></h5>
+            <img src="<?=$spam_left['photo']?>" width="90%">
+            <h6><?=$spam_left['produced']?></h6>
+            <div class="new-price">
+                <?=($spam_left['price'])?>
+            </div>
+            </p>
+            <?php } ?>
+        </div>
+        <div class="col-md-6 content-left">
+            <h1><?=$data['category']['0']['alias']?></h1>
+
+            <?php foreach($data['category'] as $news){?>
+
+            <div style="margin-top: 20px;">
+                <a href="/articles/read/<?=$news['id']?>"><?=$news['title']?></a>
+            </div>
+
+            <?php } ?>
+
+            <?php $p = $data['p']; ?>
+
+            <?php foreach ($p->buttons as $button){
+            if($button->isActive){ ?>
+            <a href = '?page=<?=$button->page?>'><?=$button->text?></a>
+            <?php }else{ ?>
+            <span style="color:#555555"><?=$button->text?></span>
+            <?php } } ?>
+        </div>
+
+        <div class="col-md-3">
+            <p><?php foreach($data['spam_right'] as $spam_right){ ?>
+            <h5><?=$spam_right['name']?></h5>
+            <img src="<?=$spam_right['photo']?>" width="90%">
+            <h6><?=$spam_right['produced']?></h6>
+            <div class="new-price">
+                <?=$spam_right['price'] ?>
+            </div>
+            </p>
+            <?php } ?>
+        </div>
+    </div>
+</div>

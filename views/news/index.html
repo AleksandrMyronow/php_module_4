@@ -1,0 +1,98 @@
+<div class="row">
+    <div class="col-md-6">
+        <div class="slider">
+            <div class="callbacks_wrap">
+                <ul class="rslides" id="myslider">
+                    <?php foreach($data['slider'] as $slide){ ?>
+                        <li>
+                            <img src="<?=$slide['photo']?>" alt="<?=$slide['title']?>" class="responsive" height="300px">
+                            <div class="caption">
+                                <a href="/articles/read/<?=$slide['id']?>"><?=$slide['title']?></a>
+                            </div>
+                        </li>
+                    <?php } ?>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+             <div class="list_vertical">
+                    <section class="accordation_menu">
+                            <input id="label-1" name="lida" type="radio" checked/>
+                            <label for="label-1" id="item1"><i class="ferme"> </i>Popular News<i class="icon-plus-sign i-right1"></i><i class="icon-minus-sign i-right2"></i></label>
+                            <div class="content">
+                                <div class="scrollbar">
+                                    <div class="popular-post-grids">
+                                        <?php foreach($data['top_news'] as $post){ ?>
+                                        <div class="popular-post-grid">
+                                            <div class="post-img">
+                                                        <a href="/articles/read/<?=$post['id']?>"><img src="<?=$post['photo']?>" alt="<?=$post['title']?>" /></a>
+                                                    </div>
+                                            <div class="post-text">
+                                                        <a class="pp-title" href="/articles/read/<?=$post['id']?>"><?=$post['title']?></a>
+                                                        <p><a class="span_link" href="/articles/read/<?=$post['id']?>"><span class="glyphicon glyphicon-comment"></span><?=$post['total']?></a>
+                                                    <div class="clearfix"></div>
+                                                </div>
+                                            <?php } ?>
+                                        </div>
+                                    </div>
+                                    <h3><span class="label label-default">Top user</span></h3>
+                                    <ul class="categories">
+                                        <?php foreach($data['top_users'] as $top_user){ ?>
+                                        <li><a href="/comments/show/<?=$top_user['user_id']?>"><span class="glyphicon glyphicon-user"><?=$top_user['login']?></span></a></li>
+                                        <?php } ?>
+                                    </ul>
+                                </div>
+                            </div>
+                    </section>
+             </div>
+        </div>
+    <div class="clearfix"></div>
+</div>
+
+<div class="row">
+    <div class="col-md-3">
+            <p><?php foreach($data['spam_left'] as $spam_left){ ?>
+            <h5><?=$spam_left['name']?></h5>
+            <img src="<?=$spam_left['photo']?>" width="90%">
+            <h6><?=$spam_left['produced']?></h6>
+            <div class="new-price">
+                <?=($spam_left['price'])?>
+            </div>
+            </p>
+            <?php } ?>
+    </div>
+    <div class="col-md-6">
+    <?php foreach($data['categories'] as $category_data){$i= 0;?>
+        <div style="margin-top: 20px;">
+        <header><h2><a href="/categories/index/<?=$category_data['alias']?>"><?=$category_data['name']?></a></h2></header>
+                <?php foreach($data['articles'] as $news){
+                        if(($news['category_id']) == ($category_data['id'])){
+                            $i++;
+                            if($i > 5){
+                            continue;}?>
+                <div class="articles">
+                    <ul>
+                        <li>
+                            <a href="/articles/read/<?=$news['id']?>"><?=$news['title']?></a>
+                        </li>
+                    </ul>
+                </div>
+                <?php } } ?>
+        </div>
+
+    <?php } ?>
+    </div>
+    <div class="col-md-3">
+            <p><?php foreach($data['spam_right'] as $spam_right){ ?>
+            <h5><?=$spam_right['name']?></h5>
+            <img src="<?=$spam_right['photo']?>" width="90%">
+            <h6><?=$spam_right['produced']?></h6>
+            <div class="new-price">
+                <?=$spam_right['price'] ?>
+            </div>
+            </p>
+            <?php } ?>
+    </div>
+</div>
+

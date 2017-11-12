@@ -1,0 +1,83 @@
+<?php $categories = Category::getListCategory();?>
+<div class="main-body">
+    <div class="wrap">
+        <div class="col-md-2">
+            <h4>Spam block</h4>
+            <p><?php foreach($data['spam_left'] as $spam_left){ ?>
+            <h5><?=$spam_left['name']?></h5>
+            <img src="<?=$spam_left['photo']?>" width="90%">
+            <h6><?=$spam_left['produced']?></h6>
+            <div class="new-price">
+                <?=($spam_left['price'])?>
+            </div>
+            </p>
+            <?php } ?>
+        </div>
+        <div class="col-md-8 content-left">
+            <script type="text/javascript" src="/webroot/js/moment-with-locales.min.js"></script>
+            <script type="text/javascript" src="/webroot/js/bootstrap-datetimepicker.min.js"></script>
+
+            <form method="POST" class="form-horizontal" name="search" action="/news/search/">
+                <div class="input-group">
+                    <input type="text" name="dateStart" class="form-control" placeholder="search from"/>
+                    <span class="input-group-addon">
+                      <span class="glyphicon glyphicon-calendar"></span>
+                    </span>
+                </div>
+                <div class="input-group">
+                    <input type="text" name="dateEnd" class="form-control" placeholder="search from"/>
+                    <span class="input-group-addon">
+                      <span class="glyphicon glyphicon-calendar"></span>
+                    </span>
+                </div>
+                <div id="category" class=" form-group center-block">
+                    <select class="form-control" name="category">
+                        <option value="0" >select category:</option>
+                        <?php foreach($categories as $category){ ?>
+                            <option value="<?=$category['id'] ?>"><?=$category['name'] ?></option>
+                        <?php } ?>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <div>
+                        <button type="submit" class="btn btn-info">Search</button>
+                    </div>
+                </div>
+            </form>
+            <script type="text/javascript">
+                $(function () {
+                    $('.input-group').datetimepicker(
+                            {pickTime: false, language: 'ru'}
+                    );
+                });
+            </script>
+
+
+
+            <?php if(isset($data['search'])){
+                foreach($data['search'] as $news){?>
+
+                <div style="margin-top: 20px;">
+                    <a href="/articles/read/<?=$news['id']?>"><?=$news['title']?></a>
+                </div>
+
+                <?php } } ?>
+
+        </div>
+
+
+
+        <div class="col-md-2">
+            <h4>Spam block</h4>
+            <p><?php foreach($data['spam_right'] as $spam_right){ ?>
+            <h5><?=$spam_right['name']?></h5>
+            <img src="<?=$spam_right['photo']?>" width="90%">
+            <h6><?=$spam_right['produced']?></h6>
+            <div class="new-price">
+                <?=$spam_right['price'] ?>
+            </div>
+            </p>
+            <?php } ?>
+        </div>
+    </div>
+</div>

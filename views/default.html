@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title><?=Config::get('site_name')?></title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<link rel="stylesheet" href="/webroot/css/style.css">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+	<script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
+
+	<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+	<script
+			src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"
+			integrity="sha256-T0Vest3yCU7pafRw9r+settMBX6JkKN06dqBnpQ8d30="
+			crossorigin="anonymous"></script>
+
+
+
+	<script>
+        $(document).mouseleave(function(){$('#cls_ctnr').show();});
+	</script>
+</head>
+
+<body>
+	<div class="header">
+		<div class="header-top">
+			<div class="wrap">
+				<div class="top-menu">
+					<ul>
+						<?php if ( isset ($_SESSION['login'])) { ?>
+						<li><a href="#">Добро пожаловать, <?=Session::get('login')?></a></li>
+						<li><a href="/users/logout">Logout</a></li>
+						<?php }else{ ?>
+						<li><a href="/users/login">Войти</a></li>
+						<li><a href="/users/register">Регистрация</a></li>
+						<?php } ?>
+					</ul>
+				</div>
+				<div class="clearfix">
+					<?php
+
+					if ( isset ($_SESSION['role']) &&  ($_SESSION['role']=='admin') ){?>
+					Hahahah
+					<?php } ?>
+				</div>
+			</div>
+		</div>
+
+		<div class="header-bottom">
+
+			<div class="navigation">
+				<nav class="navbar navbar-default" role="navigation">
+		   <div class="wrap">
+
+		
+			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+
+				<ul class="nav navbar-nav">
+					<li><a class="navbar-brand" href="/"><?=Config::get('site_name')?></a></li>
+					<li><a href="/categories/index/sport">Sport</a></li>
+					<li><a href="/categories/index/fashion">Fashion</a></li>
+					<li><a href="/categories/index/politics">Politics</a></li>
+
+					<li class="dropdown">
+					<a href="/categories/index/business" class="dropdown-toggle" data-toggle="dropdown">Bussiness<b class="caret"></b></a>
+					<ul class="dropdown-menu">
+						<li><a href="/categories/index/economics">Economics</a></li>
+						<li class="divider"></li>
+						<li><a href="/categories/index/economics">Economics</a></li>
+						<li class="divider"></li>
+						<li><a href="/categories/index/technology">Technology</a></li>
+
+						<li class="dropdown-submenu"><a href="/categories/index/analytics">Analitics</a></li>
+							<ul class="dropdown-menu">
+								<li class="divider"></li>
+								<li><a tabindex="-1" href="/categories/index/analytics">2015</a></li>
+								<li class="divider"></li>
+								<li><a tabindex="-1" href="/categories/index/analytics">2016</a></li>
+							</ul>
+
+					</ul>
+					</li>
+					<li><a href="/news/search/">Advanced search</a></li>
+					<div class="clearfix"></div>
+				</ul>
+					<div class="search">
+						<form method="get" class="navbar-form navbar-left" name="search" action="/news/search/">
+							<div class="form-group">
+								<input class="form-control" placeholder="Search by tags" name="tag" id="tag">
+							</div>
+							<button type="submit" class="btn btn-default"><p class="glyphicon glyphicon-search"></p></button>
+						</form><label for="tag"></label><br />
+
+						<?php $tags = array();
+							  $all_tags = Tags::getAllTags();
+							  foreach($all_tags as $tag){
+								  $tags[]=$tag['name'];
+								  }
+							  $tags = json_encode($tags, JSON_PRETTY_PRINT);?>
+
+						<script>
+							var Tag = <?=$tags?>;
+							$("#tag").autocomplete({source: Tag});
+						</script>
+					</div>
+					<div class="clearfix"></div>
+				</div>
+			</div>
+
+				</nav>
+		</div>
+	</div>
+
+		<div class="main-body">
+			<div class="container">
+				<div class="starter-template">
+
+					<?php if( Session::hasFlash() ){ ?>
+					<div class="alert alert-info" role="alert">
+						<?php Session::flash(); ?>
+					</div>
+					<?php } ?>
+
+					<?=$data['content']?>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="footer">
+		<div class="footer-bottom">
+			<div id="block_subscriber">
+				<h3>Subscribe to our newsletter</h3><br/>
+				<form method="post" action="/users/register">
+					<div class="form-group">
+						<label for="login">Login</label>
+						<input type="text" id="login" name="login" class="form-control" />
+					</div>
+					<div class="form-group">
+						<label for="email">Email</label>
+						<input type="text" id="email" name="email" class="form-control" />
+					</div>
+					<div class="form-group">
+						<label for="password">Password</label>
+						<input type="password" id="password" name="password" class="form-control" />
+					</div>
+					<input type="submit" class="btn btn-success" />
+				</form>
+
+			</div>
+
+			<div id="cls_ctnr">
+				<div id="cls_pop">
+					<span class="cls_close" onclick="document.getElementById('cls_ctnr').style.display='none'; return false;">x</span>
+					<h4>Вы действительно хотите покинуть сайт?</h4>
+
+				</div>
+			</div>
+
+				</div>
+
+		</div>
+	</div>
+	<?php if (!isset ($_SESSION['login'])) { ?>
+
+	<script type="text/javascript">
+		$(function(){
+			$('#block_subscriber').delay(15000)
+					.show(1);});
+
+        $(function(){
+            $ ('#block_subscriber').each(function(){
+                var closeTrigger = $(this).find('.close-block').length;
+                if (closeTrigger < 1 ){
+                    $(this).append('<span class="close-block"></span>');
+                }else{
+                    return '';
+                }
+                $('.close-block').on('click', function(){
+                    $(this).closest('#block_subscriber').fadeOut(100);
+                });
+            });
+        });
+	</script>
+
+	<?php } ?>
+
+	<script src="/webroot/js/responsiveslides.min.js"></script>
+	<script>
+        $(function () {
+            $("#myslider").responsiveSlides({
+                auto: true,
+                nav: true,
+                speed: 500,
+                namespace: "callbacks",
+                pager: true,
+            });
+        });
+	</script>
+	<script type="text/javascript" src="/webroot/js/easing.js"></script>
+
+</body>
+</html>
